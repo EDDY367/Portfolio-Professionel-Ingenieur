@@ -14,7 +14,7 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
     const node = this.element.nativeElement;
     const siblings = node.parentElement ? Array.from(node.parentElement.children) : [];
     const index = siblings.indexOf(node);
-    if (index > 0) this.renderer.setStyle(node, '--reveal-delay', `${Math.min(index * 85, 340)}ms`);
+    if (index > 0) this.renderer.setStyle(node, '--reveal-delay', `${Math.min(index * 140, 560)}ms`);
     this.renderer.addClass(node, 'reveal-pending');
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || typeof IntersectionObserver === 'undefined') {
