@@ -12,7 +12,7 @@ import { SITE } from '../site.config';
   template: `
     <section class="hero" id="home">
       <div class="hero-lines" aria-hidden="true"></div>
-      <div class="hero-copy">
+      <div class="hero-copy hero-copy-enter">
         <p class="availability"><span></span> {{ site.availability }}</p>
         <h1 [attr.aria-label]="site.heroTitle.line1 + ' ' + site.heroTitle.line2 + site.heroTitle.accent">
           <span class="hero-title-line" aria-hidden="true">@for (word of titleLine1(); track $index) {<span class="hero-title-word">@for (letter of word; track $index) {<span class="hero-title-letter" [style.--letter-delay]="letter.delay">{{ letter.char }}</span>}</span> }</span><br />
@@ -70,7 +70,7 @@ export class HeroComponent implements OnDestroy {
   private typingTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       this.visibleLength.set(this.fullTitleLength);
     } else {
       this.typingTimer = setTimeout(() => this.advanceTitle(), 350);

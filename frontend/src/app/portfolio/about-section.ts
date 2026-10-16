@@ -4,28 +4,29 @@ import { IconComponent } from '../shared/icon';
 import { SectionIntroComponent } from '../shared/section-intro';
 import { scrollToSection } from '../shared/scroll';
 import { SITE } from '../site.config';
+import { RevealDirective } from '../shared/reveal.directive';
 
 @Component({
   selector: 'app-about-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, SectionIntroComponent],
+  imports: [IconComponent, SectionIntroComponent, RevealDirective],
   template: `
     <section class="section about-section" id="about">
       <app-section-intro eyebrow="À propos">Curieux par nature.<br /><em>Ingénieur par choix.</em></app-section-intro>
       <div class="about-grid">
-        <div class="about-statement reveal">
+        <div class="about-statement reveal reveal-bounce">
           <span class="giant-quote">“</span>
           <p>{{ site.quote.before }}<strong>{{ site.quote.strong }}</strong></p>
         </div>
-        <div class="about-copy reveal">
+        <div class="about-copy reveal reveal-bounce">
           @for (para of paragraphs(); track $index) { <p>{{ para }}</p> }
           <button class="text-link" (click)="go('journey')">Découvrir mon parcours <app-icon name="arrow" /></button>
         </div>
-        <div class="metric-card reveal">
+        <div class="metric-card reveal reveal-bounce">
           <strong>{{ countedYears() }}+</strong><span>Années à apprendre,<br />construire et itérer.</span>
           <div class="metric-bars">@for (i of bars; track i) { <i></i> }</div>
         </div>
-        <div class="principles-card reveal">
+        <div class="principles-card reveal reveal-bounce">
           <span>Mes principes</span>
           <ul>@for (pr of site.principles; track pr; let i = $index) { <li><b>{{ '0' + (i + 1) }}</b> {{ pr }}</li> }</ul>
         </div>
@@ -60,27 +61,21 @@ export class AboutSectionComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (typeof window === 'undefined') return;
-    const cards = this.host.nativeElement.querySelectorAll<HTMLElement>('.about-grid .reveal');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      cards.forEach((card) => card.classList.add('is-visible'));
       this.countProgress.set(1);
       return;
     }
-    if (!cards.length || typeof IntersectionObserver === 'undefined') {
-      cards.forEach((card) => card.classList.add('is-visible'));
+    const metric = this.host.nativeElement.querySelector('.metric-card');
+    if (!metric || typeof IntersectionObserver === 'undefined') {
       this.animateCount();
       return;
     }
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const card = entry.target as HTMLElement;
-        card.classList.add('is-visible');
-        this.observer?.unobserve(card);
-        if (card.classList.contains('metric-card')) this.animateCount();
-      });
+    this.observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      this.observer?.disconnect();
+      this.animateCount();
     }, { threshold: 0.2 });
-    cards.forEach((card) => this.observer?.observe(card));
+    this.observer.observe(metric);
   }
 
   ngOnDestroy(): void {

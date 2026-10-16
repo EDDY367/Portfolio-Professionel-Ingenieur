@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { PortfolioStore } from '../core/services/portfolio-store';
 import { SectionIntroComponent } from '../shared/section-intro';
+import { RevealDirective } from '../shared/reveal.directive';
 import { SITE } from '../site.config';
 
 @Component({
   selector: 'app-skills-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SectionIntroComponent],
+  imports: [SectionIntroComponent, RevealDirective],
   template: `
     @if (groups().length) {
       <section class="section skills-section" id="skills">

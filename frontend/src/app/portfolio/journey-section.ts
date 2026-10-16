@@ -3,11 +3,12 @@ import { PortfolioStore } from '../core/services/portfolio-store';
 import { IconComponent } from '../shared/icon';
 import { SectionIntroComponent } from '../shared/section-intro';
 import { monthYear, period, safeUrl } from '../shared/format';
+import { RevealDirective } from '../shared/reveal.directive';
 
 @Component({
   selector: 'app-journey-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, SectionIntroComponent],
+  imports: [IconComponent, SectionIntroComponent, RevealDirective],
   template: `
     @if (experiences().length || educations().length || certifications().length) {
       <section class="section journey-section" id="journey">

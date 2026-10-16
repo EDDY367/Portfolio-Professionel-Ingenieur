@@ -4,16 +4,17 @@ import { PortfolioStore } from '../core/services/portfolio-store';
 import { PublicApiService } from '../core/services/public-api.service';
 import { toApiError } from '../core/services/api-error';
 import { IconComponent } from '../shared/icon';
+import { RevealDirective } from '../shared/reveal.directive';
 
 type Field = 'name' | 'email' | 'body';
 
 @Component({
   selector: 'app-contact-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, IconComponent],
+  imports: [ReactiveFormsModule, IconComponent, RevealDirective],
   template: `
     <section class="contact-section" id="contact">
-      <div class="contact-copy">
+      <div class="contact-copy reveal">
         <p class="eyebrow"><span></span>Contact</p>
         <h2>Construisons quelque<br />chose de <em>solide.</em></h2>
         <p>Une idée, un projet, une opportunité de stage ? Écrivez-moi, je réponds généralement sous 48 heures.</p>
@@ -22,7 +23,7 @@ type Field = 'name' | 'email' | 'body';
         }
       </div>
 
-      <form class="contact-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <form class="contact-form reveal" [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <label>Votre nom
           <input formControlName="name" autocomplete="name" placeholder="Ex. Marie Kouassi" [attr.aria-invalid]="invalid('name')" />
           @if (invalid('name')) { <small class="error">{{ message('name') }}</small> }

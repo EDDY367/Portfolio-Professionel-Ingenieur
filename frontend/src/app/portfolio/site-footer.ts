@@ -4,13 +4,14 @@ import { PortfolioStore } from '../core/services/portfolio-store';
 import { BrandComponent } from '../shared/brand';
 import { safeUrl } from '../shared/format';
 import { scrollToSection } from '../shared/scroll';
+import { RevealDirective } from '../shared/reveal.directive';
 
 @Component({
   selector: 'app-site-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [BrandComponent, RouterLink],
+  imports: [BrandComponent, RouterLink, RevealDirective],
   template: `
-    <footer>
+    <footer class="reveal">
       <button class="brand" (click)="top()" aria-label="Retour à l’accueil">
         <app-brand [name]="store.profile()?.fullName" />
       </button>

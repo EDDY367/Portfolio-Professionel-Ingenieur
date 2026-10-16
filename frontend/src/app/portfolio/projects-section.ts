@@ -4,13 +4,14 @@ import { PortfolioStore } from '../core/services/portfolio-store';
 import { IconComponent } from '../shared/icon';
 import { SectionIntroComponent } from '../shared/section-intro';
 import { safeUrl } from '../shared/format';
+import { RevealDirective } from '../shared/reveal.directive';
 
 const TONES = ['orange', 'blue', 'green'] as const;
 
 @Component({
   selector: 'app-projects-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, RouterLink, SectionIntroComponent],
+  imports: [IconComponent, RouterLink, SectionIntroComponent, RevealDirective],
   template: `
     @if (items().length) {
       <section class="section projects-section" id="projects">
