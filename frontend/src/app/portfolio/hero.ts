@@ -85,7 +85,7 @@ export class HeroComponent implements OnDestroy {
     const visible = this.visibleLength();
     if (!this.deleting && visible >= this.fullTitleLength) {
       this.deleting = true;
-      this.typingTimer = setTimeout(() => this.advanceTitle(), 5000);
+      this.typingTimer = setTimeout(() => this.advanceTitle(), 3500);
       return;
     }
     if (this.deleting && visible === 0) {
