@@ -125,8 +125,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .section-side { max-width: 310px; margin: 0 0 4px; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .project-list { display: grid; gap: 26px; }
 .project-card { display: grid; grid-template-columns: 1.05fr .95fr; min-height: 470px; background: var(--bg); color: var(--ink); border-radius: 3px; overflow: hidden; transition: box-shadow .35s ease, translate .35s ease; }
-.project-card.reveal.is-visible { animation: reveal-rise .95s cubic-bezier(.2,.7,.25,1) var(--reveal-delay, 0ms) both, project-vibrate .16s ease-in-out calc(var(--reveal-delay, 0ms) + .95s) 25; }
-@keyframes project-vibrate { 0%,100% { translate:0 0;rotate:0deg; } 25% { translate:-2px 0;rotate:-.14deg; } 75% { translate:2px 0;rotate:.14deg; } }
+.project-card.reveal.is-visible { animation: reveal-rise .95s cubic-bezier(.2,.7,.25,1) var(--reveal-delay, 0ms) both, project-vibrate .16s linear calc(var(--reveal-delay, 0ms) + .95s) 25; }
+@keyframes project-vibrate {
+  0%,100% { translate:0 0;rotate:0deg; }
+  12.5% { translate:0 -3px;rotate:-.12deg; }
+  25% { translate:2px -2px;rotate:.08deg; }
+  37.5% { translate:3px 0;rotate:.14deg; }
+  50% { translate:2px 2px;rotate:.08deg; }
+  62.5% { translate:0 3px;rotate:-.12deg; }
+  75% { translate:-2px 2px;rotate:-.14deg; }
+  87.5% { translate:-3px 0;rotate:-.05deg; }
+}
 .project-card:hover { translate: 0 -4px; box-shadow: 0 24px 60px rgba(0,0,0,.2); }
 :root[data-theme="dark"] .project-card { background: #f8f6f0; color: #171714; }
 .project-visual { min-height: 430px; position: relative; overflow: hidden; display: grid; place-items: center; background: #e45f2f; }
