@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: portfolio-api
+  profiles:
+    # dev = migrations + donnees de demo. En production : SPRING_PROFILES_ACTIVE=prod
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:5}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  error:
+    include-message: never
+    include-stacktrace: never
+
+application:
+  security:
+    jwt-secret: ${JWT_SECRET}
+    jwt-expiration-minutes: ${JWT_EXPIRATION_MINUTES:120}
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:4200}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+---
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  flyway:
+    # db/supabase : active la RLS pour bloquer l'acces direct a l'API PostgREST de Supabase
+    locations: classpath:db/migration,classpath:db/supabase
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

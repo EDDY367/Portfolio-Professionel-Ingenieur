@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Dark background radial glow -->
+    <radialGradient id="bgGlow" cx="50%" cy="46%" r="52%">
+      <stop offset="0%" stop-color="#121e33" stop-opacity="0.8"/>
+      <stop offset="65%" stop-color="#0a0d14" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#05070a" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- Metallic Silver Gradient for 'D' -->
+    <linearGradient id="silverD" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="28%" stop-color="#E8ECF2"/>
+      <stop offset="55%" stop-color="#9EABB9"/>
+      <stop offset="85%" stop-color="#C5CFDB"/>
+      <stop offset="100%" stop-color="#7A8797"/>
+    </linearGradient>
+
+    <!-- Electric Blue Gradient for 'E' -->
+    <linearGradient id="electricBlue" x1="0%" y1="15%" x2="100%" y2="85%">
+      <stop offset="0%" stop-color="#00A8FF"/>
+      <stop offset="35%" stop-color="#0072E5"/>
+      <stop offset="75%" stop-color="#004FB8"/>
+      <stop offset="100%" stop-color="#00358A"/>
+    </linearGradient>
+
+    <!-- Warm Gold Gradient for 'Y' -->
+    <linearGradient id="goldY" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#FFE57F"/>
+      <stop offset="30%" stop-color="#FFC107"/>
+      <stop offset="65%" stop-color="#FF9800"/>
+      <stop offset="100%" stop-color="#C77700"/>
+    </linearGradient>
+
+    <!-- Dynamic Gold Swoosh Gradient -->
+    <linearGradient id="goldSwoosh" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF8F00"/>
+      <stop offset="30%" stop-color="#FFD54F"/>
+      <stop offset="70%" stop-color="#FFE082"/>
+      <stop offset="100%" stop-color="#FFA000"/>
+    </linearGradient>
+
+    <!-- Golden Ring Gradient -->
+    <linearGradient id="goldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFC107"/>
+      <stop offset="25%" stop-color="#FFE082"/>
+      <stop offset="50%" stop-color="#FFB300"/>
+      <stop offset="75%" stop-color="#FFA000"/>
+      <stop offset="100%" stop-color="#D48800"/>
+    </linearGradient>
+
+    <!-- Glow Filter for the Gold Accents -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Drop Shadow for 3D depth -->
+    <filter id="shadow3d" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="3" dy="5" stdDeviation="4.5" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded canvas (optional / dark theme ready) -->
+  <rect width="500" height="500" rx="40" fill="url(#bgGlow)"/>
+
+  <!-- Outer Glowing Gold Ring -->
+  <g filter="url(#shadow3d)">
+    <circle cx="250" cy="225" r="165" fill="none" stroke="url(#goldRing)" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- Subtle secondary accent arc -->
+    <path d="M 395 240 A 165 165 0 0 1 370 310" fill="none" stroke="#FFE082" stroke-width="3" opacity="0.7"/>
+  </g>
+
+  <!-- Group: DEY Monogram -->
+  <g filter="url(#shadow3d)" transform="translate(0, 5)">
+    <!-- ====== LETTER E (Blue) ====== -->
+    <g fill="url(#electricBlue)">
+      <path d="M 205 155
+               H 315
+               L 315 190
+               H 245
+               V 212
+               H 300
+               V 244
+               H 245
+               V 268
+               H 320
+               L 305 303
+               H 205
+               Z"/>
+    </g>
+
+    <!-- ====== LETTER Y (Gold) ====== -->
+    <g fill="url(#goldY)">
+      <path d="M 295 155
+               L 335 155
+               L 375 228
+               L 415 155
+               L 455 155
+               L 395 250
+               V 303
+               H 355
+               V 250
+               Z"/>
+    </g>
+
+    <!-- ====== LETTER D (Silver / Chrome) ====== -->
+    <g fill="url(#silverD)">
+      <!-- Outer D shape with diagonal bevel cuts -->
+      <path d="M 90 155
+               L 115 155
+               L 135 155
+               C 185 155, 230 180, 230 229
+               C 230 278, 185 303, 135 303
+               L 105 303
+               L 90 303
+               Z
+               M 125 185
+               V 273
+               H 135
+               C 168 273, 195 255, 195 229
+               C 195 203, 168 185, 135 185
+               Z"
+            fill-rule="evenodd"/>
+    </g>
+
+    <!-- ====== DYNAMIC GOLD SWOOSH CUT ====== -->
+    <!-- Curved blade passing through D and E towards Y -->
+    <path d="M 100 303
+             C 140 285, 205 240, 315 195
+             C 335 187, 355 182, 380 180
+             C 345 188, 290 215, 220 255
+             C 170 283, 130 298, 100 303
+             Z"
+          fill="url(#goldSwoosh)"
+          filter="url(#goldGlow)"/>
+  </g>
+
+  <!-- ====== TYPOGRAPHY: DOFFOU EDDY YANN ====== -->
+  <g transform="translate(250, 415)" text-anchor="middle" font-family="'Syne', 'Manrope', 'Montserrat', sans-serif" font-weight="800" font-size="28" letter-spacing="4">
+    <!-- DOFFOU in silver -->
+    <text x="-120" y="0" fill="url(#silverD)">DOFFOU</text>
+    <!-- EDDY in electric blue -->
+    <text x="3" y="0" fill="url(#electricBlue)">EDDY</text>
+    <!-- YANN in warm gold -->
+    <text x="125" y="0" fill="url(#goldY)">YANN</text>
+  </g>
+
+  <!-- ====== BOTTOM ACCENT LINES ====== -->
+  <g stroke="url(#goldRing)" stroke-width="2.5" stroke-linecap="round" opacity="0.9" filter="url(#goldGlow)">
+    <!-- Left bar -->
+    <line x1="125" y1="442" x2="232" y2="442"/>
+    <!-- Center double hash / slashes -->
+    <line x1="242" y1="446" x2="248" y2="438" stroke="#FFE082" stroke-width="2.5"/>
+    <line x1="252" y1="446" x2="258" y2="438" stroke="#FFE082" stroke-width="2.5"/>
+    <!-- Right bar -->
+    <line x1="268" y1="442" x2="375" y2="442"/>
+  </g>
+</svg>

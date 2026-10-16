@@ -1,0 +1,19 @@
+# Dépendances et builds
+node_modules/
+dist/
+.angular/
+target/
+
+# Secrets et configuration locale : ne jamais committer
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.properties
+
+# IDE / système
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

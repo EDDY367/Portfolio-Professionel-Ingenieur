@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:portfolio;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  flyway:
+    locations: classpath:db/migration
+
+application:
+  security:
+    # Valeur reservee aux tests : jamais utilisee hors du profil "test".
+    jwt-secret: test-only-secret-key-with-at-least-32-bytes!!
+    jwt-expiration-minutes: 5
+  cors:
+    allowed-origins: http://localhost:4200
