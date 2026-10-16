@@ -61,7 +61,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .availability span { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 0 5px color-mix(in srgb, var(--green) 15%, transparent); animation: pulse 2s infinite; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 8px transparent; } }
 .hero h1, .section-intro h2, .contact-copy h2 { margin: 0; font: 600 clamp(58px, 8vw, 118px)/.86 "Syne"; letter-spacing: -.075em; }
-.hero h1 span, h2 em { color: var(--accent); font-style: normal; }
+.hero-title-accent, h2 em { color: var(--accent); font-style: normal; }
+.hero-title-word { display: inline-block; white-space: nowrap; }
+.hero-title-letter { display: inline-block; animation: hero-letter-drop .65s cubic-bezier(.2,.75,.25,1) both; animation-delay: var(--letter-delay, 0s); }
+@keyframes hero-letter-drop { from { opacity: 0; transform: translateY(-.55em); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .hero-title-letter { animation: none; } }
 .hero-description { max-width: 620px; margin: 38px 0; color: var(--muted); font-size: clamp(16px, 1.7vw, 20px); line-height: 1.65; }
 .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .button { min-height: 50px; padding: 0 20px; border-radius: 12px; border: 1px solid var(--line); display: inline-flex; justify-content: center; align-items: center; gap: 11px; font-size: 13px; font-weight: 700; cursor: pointer; transition: transform .2s, background .2s; }
@@ -70,7 +74,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .modal-actions>button:first-child { background: var(--accent); height: 42px; font-size: 10px; }
 .button.ghost { background: var(--bg-elevated); }
 .hero-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 28px; }
-.portrait-card { width: min(100%, 310px); padding: 10px; background: var(--bg-elevated); border: 1px solid var(--line); box-shadow: var(--shadow); transform: rotate(2deg); }
+.portrait-card { width: min(100%, 310px); padding: 10px; background: var(--bg-elevated); border: 1px solid var(--line); box-shadow: var(--shadow); transform: rotate(2deg); animation: portrait-arrive .95s cubic-bezier(.2,.75,.25,1) .15s both; }
+@keyframes portrait-arrive { from { opacity: 0; transform: translateX(-90px) translateY(18px) rotate(-11deg); } 72% { opacity: 1; transform: translateX(7px) translateY(-3px) rotate(4deg); } to { opacity: 1; transform: translateX(0) translateY(0) rotate(2deg); } }
+@media (prefers-reduced-motion: reduce) { .portrait-card { animation: none; } }
 .portrait-placeholder { aspect-ratio: 4 / 5; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; background: var(--bg-soft); background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size: 30px 30px; }
 .portrait-placeholder::before { content:""; position: absolute; width: 180px; height: 180px; border: 1px solid var(--accent); border-radius: 50%; opacity: .35; }
 .portrait-monogram { z-index: 1; display: grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; background: var(--ink); color: var(--bg); font: 600 28px "Syne"; letter-spacing: -.06em; }

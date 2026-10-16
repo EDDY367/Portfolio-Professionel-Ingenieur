@@ -14,7 +14,10 @@ import { SITE } from '../site.config';
       <div class="hero-lines" aria-hidden="true"></div>
       <div class="hero-copy">
         <p class="availability"><span></span> {{ site.availability }}</p>
-        <h1>{{ site.heroTitle.line1 }}<br />{{ site.heroTitle.line2 }}<span>{{ site.heroTitle.accent }}</span></h1>
+        <h1 [attr.aria-label]="site.heroTitle.line1 + ' ' + site.heroTitle.line2 + site.heroTitle.accent">
+          <span class="hero-title-line" aria-hidden="true">@for (word of titleLine1; track $index) {<span class="hero-title-word">@for (letter of word; track $index) {<span class="hero-title-letter" [style.--letter-delay]="letter.delay">{{ letter.char }}</span>}</span> }</span><br />
+          <span class="hero-title-line" aria-hidden="true">@for (word of titleLine2; track $index) {<span class="hero-title-word">@for (letter of word; track $index) {<span class="hero-title-letter" [style.--letter-delay]="letter.delay">{{ letter.char }}</span>}</span> }<span class="hero-title-accent">@for (letter of titleAccent; track $index) {<span class="hero-title-letter" [style.--letter-delay]="letter.delay">{{ letter.char }}</span>}</span></span>
+        </h1>
         <p class="hero-description">{{ description() }}</p>
         <div class="hero-actions">
           <button class="button primary" (click)="go('projects')">Explorer mes projets <app-icon name="arrow" /></button>
@@ -50,6 +53,9 @@ import { SITE } from '../site.config';
 })
 export class HeroComponent {
   protected readonly site = SITE;
+  protected readonly titleLine1 = this.makeTitleWords(SITE.heroTitle.line1, 0);
+  protected readonly titleLine2 = this.makeTitleWords(SITE.heroTitle.line2, SITE.heroTitle.line1.length);
+  protected readonly titleAccent = Array.from(SITE.heroTitle.accent).map((char, index) => ({ char, delay: `${(SITE.heroTitle.line1.length + SITE.heroTitle.line2.length + index) * 0.025}s` }));
   private readonly store = inject(PortfolioStore);
   protected readonly profile = this.store.profile;
   protected readonly description = computed(() => this.profile()?.headline || this.profile()?.bio || '');
@@ -58,5 +64,9 @@ export class HeroComponent {
   protected readonly photo = computed(() => imageSrc(this.profile()?.photoUrl) ?? SITE.defaultPhoto);
   protected readonly photoFailed = signal(false);
   protected readonly monogram = computed(() => initials(this.profile()?.fullName));
+  private makeTitleWords(text: string, offset: number): { char: string; delay: string }[][] {
+    let index = offset;
+    return text.trim().split(/\s+/).map((word) => Array.from(word).map((char) => ({ char, delay: `${index++ * 0.025}s` })));
+  }
   protected go(id: string): void { scrollToSection(id); }
 }
