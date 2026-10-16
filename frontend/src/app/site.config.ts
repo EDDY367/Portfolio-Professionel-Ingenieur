@@ -8,7 +8,7 @@ export const SITE = {
   /** Photo par défaut (fichier du dossier public/) quand profile.photoUrl est vide. */
   defaultPhoto: 'eddy-photo.jpg',
   availability: 'Disponible pour un stage',
-  heroTitle: { line1: 'J’ingénierie', line2: 'les ', accent: 'données.' },
+  heroTitle: { line1: 'Je transforme', line2: 'les données en ', accent: 'décisions.' },
   heroNote: ['Data Engineering', 'Cloud · IA · Security'],
   coordinates: '05°20′ N\u00A0\u00A0 04°01′ W',
   quote: { before: 'Je crois que les meilleurs systèmes sont ceux que l’on ne remarque pas : ', strong: 'simples à utiliser, difficiles à casser.' },

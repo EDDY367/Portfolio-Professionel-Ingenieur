@@ -12,7 +12,7 @@ import { monthYear, period, safeUrl } from '../shared/format';
     @if (experiences().length || educations().length || certifications().length) {
       <section class="section journey-section" id="journey">
         <app-section-intro eyebrow="Parcours">Construire, apprendre,<br /><em>recommencer.</em></app-section-intro>
-        <div class="journey-layout">
+        <div class="journey-layout" [class.journey-layout--timeline-only]="!educations().length && !certifications().length">
           <div class="timeline">
             @for (e of experiences(); track e.id; let i = $index) {
               <article class="timeline-item reveal">
@@ -26,6 +26,7 @@ import { monthYear, period, safeUrl } from '../shared/format';
               </article>
             }
           </div>
+          @if (educations().length || certifications().length) {
           <aside class="education-panel reveal">
             @if (educations().length) {
               <p class="eyebrow"><span></span>Formation</p>
@@ -56,6 +57,7 @@ import { monthYear, period, safeUrl } from '../shared/format';
               </div>
             }
           </aside>
+          }
         </div>
       </section>
     }
