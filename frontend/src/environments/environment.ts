@@ -5,5 +5,5 @@
  */
 export const environment = {
   production: true,
-  apiUrl: 'https://api.example.com/api/v1',
+  apiUrl:  'https://portfolio-api-eh3t.onrender.com/api/v1',
 };
