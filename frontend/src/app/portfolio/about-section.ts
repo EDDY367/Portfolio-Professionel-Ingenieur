@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, inject, OnDestroy, signal } from '@angular/core';
 import { PortfolioStore } from '../core/services/portfolio-store';
 import { IconComponent } from '../shared/icon';
 import { SectionIntroComponent } from '../shared/section-intro';
@@ -22,7 +22,7 @@ import { SITE } from '../site.config';
           <button class="text-link" (click)="go('journey')">Découvrir mon parcours <app-icon name="arrow" /></button>
         </div>
         <div class="metric-card reveal">
-          <strong>{{ years() }}+</strong><span>Années à apprendre,<br />construire et itérer.</span>
+          <strong>{{ countedYears() }}+</strong><span>Années à apprendre,<br />construire et itérer.</span>
           <div class="metric-bars">@for (i of bars; track i) { <i></i> }</div>
         </div>
         <div class="principles-card reveal">
@@ -33,10 +33,16 @@ import { SITE } from '../site.config';
     </section>
   `,
 })
-export class AboutSectionComponent {
+export class AboutSectionComponent implements AfterViewInit, OnDestroy {
   protected readonly site = SITE;
   protected readonly bars = [1, 2, 3, 4, 5, 6, 7];
   private readonly store = inject(PortfolioStore);
+  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly countProgress = signal(0);
+  private observer?: IntersectionObserver;
+  private frame?: number;
+  private countStarted = false;
+  protected readonly countedYears = computed(() => String(Math.round(Number(this.years()) * this.countProgress())).padStart(2, '0'));
 
   protected readonly paragraphs = computed(() =>
     (this.store.profile()?.bio ?? '').split(/\n+/).map((s) => s.trim()).filter(Boolean),
@@ -51,6 +57,49 @@ export class AboutSectionComponent {
     const n = starts.length ? new Date().getFullYear() - Math.min(...starts) : 3;
     return String(Math.max(n, 1)).padStart(2, '0');
   });
+
+  ngAfterViewInit(): void {
+    if (typeof window === 'undefined') return;
+    const cards = this.host.nativeElement.querySelectorAll<HTMLElement>('.about-grid .reveal');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cards.forEach((card) => card.classList.add('is-visible'));
+      this.countProgress.set(1);
+      return;
+    }
+    if (!cards.length || typeof IntersectionObserver === 'undefined') {
+      cards.forEach((card) => card.classList.add('is-visible'));
+      this.animateCount();
+      return;
+    }
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target as HTMLElement;
+        card.classList.add('is-visible');
+        this.observer?.unobserve(card);
+        if (card.classList.contains('metric-card')) this.animateCount();
+      });
+    }, { threshold: 0.2 });
+    cards.forEach((card) => this.observer?.observe(card));
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+    if (this.frame !== undefined) cancelAnimationFrame(this.frame);
+  }
+
+  private animateCount(): void {
+    if (this.countStarted) return;
+    this.countStarted = true;
+    const startedAt = performance.now();
+    const duration = 1900;
+    const step = (now: number): void => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      this.countProgress.set(1 - Math.pow(1 - progress, 3));
+      if (progress < 1) this.frame = requestAnimationFrame(step);
+    };
+    this.frame = requestAnimationFrame(step);
+  }
 
   protected go(id: string): void { scrollToSection(id); }
 }
